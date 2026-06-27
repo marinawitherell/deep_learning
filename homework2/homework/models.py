@@ -83,12 +83,6 @@ class MLPClassifier(nn.Module):
         super().__init__()
 
         c = 3*h*w
-        
-        # self.mlp = nn.Sequential(
-        #   nn.Linear(c, hidden_dim),
-        #   nn.ReLU(),
-        #   nn.Linear(hidden_dim, num_classes)
-        # )
 
         layers = []
         layers.append(torch.nn.Flatten())
@@ -109,11 +103,6 @@ class MLPClassifier(nn.Module):
             tensor (b, num_classes) logits
         """
         
-        # x_flat = x.view(x.size(0), -1)
-        # logits = self.mlp(x_flat)
-        
-        # return logits
-
         return self.model(x)
 
 
@@ -140,31 +129,6 @@ class MLPClassifierDeep(nn.Module):
         """
         super().__init__()
 
-        # input_dim = 3*h*w
-        # layers = []
-
-        # layers.append(nn.Linear(input_dim, hidden_dim))
-        
-        # layers.append(nn.ReLU())
-        # # layers.append(nn.BatchNorm1d(hidden_dim))
-
-        # for _ in range(num_layers - 2):
-        #     layers.append(nn.Linear(hidden_dim, hidden_dim))
-            
-        #     layers.append(nn.ReLU())
-        #     #layers.append(nn.BatchNorm1d(hidden_dim))
-
-        # layers.append(nn.Linear(hidden_dim, num_classes))
-
-        # self.deepmlp = nn.Sequential(*layers)
-
-        # self.mlp = nn.Sequential(
-        #   for _ in range(num_layers):
-        #   nn.Linear(input_dim, hidden_dim),
-        #   nn.ReLU(),
-        #   nn.Linear(hidden_dim, num_classes)
-        # )
-
         c = 3*h*w
         layers = []
         layers.append(torch.nn.Flatten())
@@ -187,10 +151,6 @@ class MLPClassifierDeep(nn.Module):
             tensor (b, num_classes) logits
         """
         
-        # x_flat = x.view(x.size(0), -1)
-        
-        # # Pass through our deep network
-        # return self.deepmlp(x_flat)
         return self.model(x)
 
 class MLPClassifierDeepResidual(nn.Module):
@@ -208,7 +168,6 @@ class MLPClassifierDeepResidual(nn.Module):
             self.skip = torch.nn.Identity()
 
       def forward(self, x) -> torch.Tensor:
-          # y = self.relu(self.norm(self.linear(x)))
           return self.skip(x) + self.model(x)
 
     def __init__(
@@ -231,21 +190,6 @@ class MLPClassifierDeepResidual(nn.Module):
         """
         super().__init__()
 
-        # input_dim = 3 * h * w
-        
-        # self.input_layer = nn.Linear(input_dim, hidden_dim)
-        # self.input_bn = nn.BatchNorm1d(hidden_dim)
-        # self.relu = nn.ReLU()
-
-        # self.hidden_layers = nn.ModuleList()
-        # self.hidden_bns = nn.ModuleList()
-        
-        # for _ in range(num_layers - 2):
-        #     self.hidden_layers.append(nn.Linear(hidden_dim, hidden_dim))
-        #     self.hidden_bns.append(nn.BatchNorm1d(hidden_dim))
-
-        # self.output_layer = nn.Linear(hidden_dim, num_classes)
-
         c = 3*h*w
         layers = []
         layers.append(torch.nn.Flatten())
@@ -266,21 +210,6 @@ class MLPClassifierDeepResidual(nn.Module):
             tensor (b, num_classes) logits
         """
         
-        # x = self.input_norm(x)
-        
-        # x = x.view(x.size(0), -1)
-        
-        # x = self.relu(self.input_bn(self.input_layer(x)))
-
-        # for layer, bn in zip(self.hidden_layers, self.hidden_bns):
-        #     shortcut = x 
-        #     residual = bn(layer(x))
-        #     x = self.relu(residual + shortcut)
-
-        # logits = self.output_layer(x)
-        
-        # return logits
-
         return self.model(x)
 
 
