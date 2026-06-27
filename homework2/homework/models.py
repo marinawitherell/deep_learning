@@ -45,8 +45,8 @@ class LinearClassifier(nn.Module):
         super().__init__()
 
         
-        input_dim = 3*h*w
-        self.linear = nn.Linear(input_dim, num_classes)
+        c = 3*h*w
+        self.linear = nn.Linear(c, num_classes)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -82,13 +82,22 @@ class MLPClassifier(nn.Module):
         """
         super().__init__()
 
-        input_dim = 3*h*w
+        c = 3*h*w
         
-        self.mlp = nn.Sequential(
-          nn.Linear(input_dim, hidden_dim),
-          nn.ReLU(),
-          nn.Linear(hidden_dim, num_classes)
-        )
+        # self.mlp = nn.Sequential(
+        #   nn.Linear(c, hidden_dim),
+        #   nn.ReLU(),
+        #   nn.Linear(hidden_dim, num_classes)
+        # )
+
+        layers = []
+        layers.append(torch.nn.Flatten())
+        
+        layers.append(torch.nn.Linear(c, hidden_dim))
+        layers.append(torch.nn.ReLU())
+
+        layers.append(torch.nn.Linear(hidden_dim, num_classes))
+        self.model = torch.nn.Sequential(*layers)
 
         
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -100,10 +109,12 @@ class MLPClassifier(nn.Module):
             tensor (b, num_classes) logits
         """
         
-        x_flat = x.view(x.size(0), -1)
-        logits = self.mlp(x_flat)
+        # x_flat = x.view(x.size(0), -1)
+        # logits = self.mlp(x_flat)
         
-        return logits
+        # return logits
+
+        return self.model(x)
 
 
 class MLPClassifierDeep(nn.Module):
