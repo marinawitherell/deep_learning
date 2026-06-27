@@ -25,7 +25,8 @@ class ClassificationLoss(nn.Module):
         Returns:
             tensor, scalar loss
         """
-        raise NotImplementedError("ClassificationLoss.forward() is not implemented")
+        #raise NotImplementedError("ClassificationLoss.forward() is not implemented")
+        return nn.functional.cross_entropy(logits, target)
 
 
 class LinearClassifier(nn.Module):
@@ -43,7 +44,10 @@ class LinearClassifier(nn.Module):
         """
         super().__init__()
 
-        raise NotImplementedError("LinearClassifier.__init__() is not implemented")
+        #raise NotImplementedError("LinearClassifier.__init__() is not implemented")
+
+        input_dim = 3*h*w
+        self.linear = nn.Linear(input_dim, num_classes)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -53,7 +57,12 @@ class LinearClassifier(nn.Module):
         Returns:
             tensor (b, num_classes) logits
         """
-        raise NotImplementedError("LinearClassifier.forward() is not implemented")
+        #raise NotImplementedError("LinearClassifier.forward() is not implemented")
+
+        x_flat = x.view(x.size(0), -1)
+        logits = self.linear(x_flat)
+        
+        return logits
 
 
 class MLPClassifier(nn.Module):
