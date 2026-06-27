@@ -46,6 +46,7 @@ def train(
     # create loss function and optimizer
     loss_func = ClassificationLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+    # optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9)
 
     global_step = 0
     metrics = {"train_acc": [], "val_acc": []}
