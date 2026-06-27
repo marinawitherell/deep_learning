@@ -140,23 +140,23 @@ class MLPClassifierDeep(nn.Module):
         """
         super().__init__()
 
-        input_dim = 3*h*w
-        layers = []
+        # input_dim = 3*h*w
+        # layers = []
 
-        layers.append(nn.Linear(input_dim, hidden_dim))
+        # layers.append(nn.Linear(input_dim, hidden_dim))
         
-        layers.append(nn.ReLU())
-        # layers.append(nn.BatchNorm1d(hidden_dim))
+        # layers.append(nn.ReLU())
+        # # layers.append(nn.BatchNorm1d(hidden_dim))
 
-        for _ in range(num_layers - 2):
-            layers.append(nn.Linear(hidden_dim, hidden_dim))
+        # for _ in range(num_layers - 2):
+        #     layers.append(nn.Linear(hidden_dim, hidden_dim))
             
-            layers.append(nn.ReLU())
-            #layers.append(nn.BatchNorm1d(hidden_dim))
+        #     layers.append(nn.ReLU())
+        #     #layers.append(nn.BatchNorm1d(hidden_dim))
 
-        layers.append(nn.Linear(hidden_dim, num_classes))
+        # layers.append(nn.Linear(hidden_dim, num_classes))
 
-        self.deepmlp = nn.Sequential(*layers)
+        # self.deepmlp = nn.Sequential(*layers)
 
         # self.mlp = nn.Sequential(
         #   for _ in range(num_layers):
@@ -164,6 +164,18 @@ class MLPClassifierDeep(nn.Module):
         #   nn.ReLU(),
         #   nn.Linear(hidden_dim, num_classes)
         # )
+
+        c = 3*h*w
+        layers = []
+        layers.append(torch.nn.Flatten())
+        
+        for _ in range(num_layers-1):
+          layers.append(torch.nn.Linear(c, hidden_dim))
+          layers.append(torch.nn.ReLU())
+          c = hidden_dim
+
+        layers.append(torch.nn.Linear(hidden_dim, num_classes))
+        self.model = torch.nn.Sequential(*layers)
 
         
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -175,10 +187,11 @@ class MLPClassifierDeep(nn.Module):
             tensor (b, num_classes) logits
         """
         
-        x_flat = x.view(x.size(0), -1)
+        # x_flat = x.view(x.size(0), -1)
         
-        # Pass through our deep network
-        return self.deepmlp(x_flat)
+        # # Pass through our deep network
+        # return self.deepmlp(x_flat)
+        return self.model(x)
 
 class MLPClassifierDeepResidual(nn.Module):
     def __init__(
