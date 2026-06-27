@@ -112,7 +112,7 @@ class MLPClassifierDeep(nn.Module):
         h: int = 64,
         w: int = 64,
         num_classes: int = 6,
-        hidden_dim: int = 128,
+        hidden_dim: int = 64,
         num_layers: int = 4,
     ):
         """
@@ -133,13 +133,15 @@ class MLPClassifierDeep(nn.Module):
         layers = []
 
         layers.append(nn.Linear(input_dim, hidden_dim))
-        layers.append(nn.BatchNorm1d(hidden_dim))
+        
         layers.append(nn.ReLU())
+        layers.append(nn.BatchNorm1d(hidden_dim))
 
         for _ in range(num_layers - 2):
             layers.append(nn.Linear(hidden_dim, hidden_dim))
-            layers.append(nn.BatchNorm1d(hidden_dim))
+            
             layers.append(nn.ReLU())
+            layers.append(nn.BatchNorm1d(hidden_dim))
 
         layers.append(nn.Linear(hidden_dim, num_classes))
 
