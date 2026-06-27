@@ -82,8 +82,11 @@ class MLPClassifier(nn.Module):
         """
         super().__init__()
 
-        raise NotImplementedError("MLPClassifier.__init__() is not implemented")
+        input_dim = 3*h*w
+        
+        self.mlp = nn.ReLU(input_dim, num_classes)
 
+        
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
         Args:
