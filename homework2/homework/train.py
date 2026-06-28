@@ -30,6 +30,11 @@ def train(
                 "lr": 1e-3,
                 "weight_decay": 1e-4,
             },
+            "mlp_deep": {
+            "num_epoch": 50,
+            "lr": 3e-4,
+            "weight_decay": 1e-4,
+            },
             "mlp_deep_residual": {
                 "num_epoch": 60,
                 "lr": 3e-4,
