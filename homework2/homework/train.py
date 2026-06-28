@@ -20,35 +20,35 @@ def train(
     **kwargs,
 ):
 
-    # MODEL_CONFIGS = {
-    #         "linear": {
-    #             "num_epoch": 30,
-    #             "lr": 1e-3,
-    #         },
-    #         "mlp": {
-    #             "num_epoch": 50, # 27, 28, 70
-    #             "lr": 1e-3,
-    #             "weight_decay": 1e-4,
-    #         },
-      #         "mlp_deep": {
-      #         "num_epoch": 65,
-      #         "lr": 1e-4,
-      #         "weight_decay": 1e-4,
-    #         },
-    #         "mlp_deep_residual": {
-    #             "num_epoch": 60,
-    #             "lr": 3e-4,
-    #             "weight_decay": 1e-5,
-    #         }
-    #     }
+    MODEL_CONFIGS = {
+            "linear": {
+                "num_epoch": 30,
+                "lr": 1e-3,
+            },
+            "mlp": {
+                "num_epoch": 50, # 27, 28, 70
+                "lr": 1e-3,
+                "weight_decay": 1e-4,
+            },
+              "mlp_deep": {
+              "num_epoch": 65,
+              "lr": 1e-4,
+              "weight_decay": 1e-4,
+            },
+            "mlp_deep_residual": {
+                "num_epoch": 50,
+                "lr": 1e-4,
+                "weight_decay": 1e-5,
+            }
+        }
 
-    # if model_name in MODEL_CONFIGS:
-    #     config = MODEL_CONFIGS[model_name]
-    #     num_epoch = config.get("num_epoch", num_epoch)
-    #     lr = config.get("lr", lr)
-    #     weight_decay = config.get("weight_decay", 1e-5)
-    # else:
-    #     weight_decay = 1e-5
+    if model_name in MODEL_CONFIGS:
+        config = MODEL_CONFIGS[model_name]
+        num_epoch = config.get("num_epoch", num_epoch)
+        lr = config.get("lr", lr)
+        weight_decay = config.get("weight_decay", 1e-5)
+    else:
+        weight_decay = 1e-5
 
 
     if torch.cuda.is_available():
