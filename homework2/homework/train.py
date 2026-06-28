@@ -20,35 +20,35 @@ def train(
     **kwargs,
 ):
 
-    MODEL_CONFIGS = {
-            "linear": {
-                "num_epoch": 40,
-                "lr": 1e-3,
-            },
-            "mlp": {
-                "num_epoch": 30, # 27, 28, 70
-                "lr": 1e-3,
-                "weight_decay": 1e-4,
-            },
-            "mlp_deep": {
-            "num_epoch": 50,
-            "lr": 3e-4,
-            "weight_decay": 1e-4,
-            },
-            "mlp_deep_residual": {
-                "num_epoch": 60,
-                "lr": 3e-4,
-                "weight_decay": 1e-5,
-            }
-        }
+    # MODEL_CONFIGS = {
+    #         "linear": {
+    #             "num_epoch": 30,
+    #             "lr": 1e-3,
+    #         },
+    #         "mlp": {
+    #             "num_epoch": 50, # 27, 28, 70
+    #             "lr": 1e-3,
+    #             "weight_decay": 1e-4,
+    #         },
+      #         "mlp_deep": {
+      #         "num_epoch": 65,
+      #         "lr": 1e-4,
+      #         "weight_decay": 1e-4,
+    #         },
+    #         "mlp_deep_residual": {
+    #             "num_epoch": 60,
+    #             "lr": 3e-4,
+    #             "weight_decay": 1e-5,
+    #         }
+    #     }
 
-    if model_name in MODEL_CONFIGS:
-        config = MODEL_CONFIGS[model_name]
-        num_epoch = config.get("num_epoch", num_epoch)
-        lr = config.get("lr", lr)
-        weight_decay = config.get("weight_decay", 1e-5)
-    else:
-        weight_decay = 1e-5
+    # if model_name in MODEL_CONFIGS:
+    #     config = MODEL_CONFIGS[model_name]
+    #     num_epoch = config.get("num_epoch", num_epoch)
+    #     lr = config.get("lr", lr)
+    #     weight_decay = config.get("weight_decay", 1e-5)
+    # else:
+    #     weight_decay = 1e-5
 
 
     if torch.cuda.is_available():
@@ -157,8 +157,8 @@ if __name__ == "__main__":
     parser.add_argument("--seed", type=int, default=2024)
 
     # optional: additional model hyperparamters
-    parser.add_argument("--hidden_dim", type=int, default=64)
-    parser.add_argument("--num_layers", type=int, default=4)
+    # parser.add_argument("--hidden_dim", type=int, default=64)
+    # parser.add_argument("--num_layers", type=int, default=4)
 
     # pass all arguments to train
     train(**vars(parser.parse_args()))
